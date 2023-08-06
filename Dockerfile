@@ -47,8 +47,8 @@ torchvision==0.14.1 \
 torchaudio==0.13.1
 
 # Install dependencies for labelme
-RUN pip install --upgrade / 
-imgviz /
+RUN pip install --upgrade \
+imgviz \
 labelme
 
 # # Install requirements for labelme
