@@ -278,7 +278,7 @@ Distributed under the GNU General Public License v3.0. See `LICENSE` for more in
 
 [![Email][Email-shield]][Email-url] [![LinkedIn][linkedin-shield]][linkedin-url] [![Discord][Discord-shield]][Discord-url]
 
-Project Link: [https://github.com/cargonvis/docker-yolov7](https://github.com/cargonvis/docker-mask-rcnn-pytorch)
+Project Link: [https://github.com/cargonvis/docker-mask-rcnn-pytorch](https://github.com/cargonvis/docker-mask-rcnn-pytorch)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
