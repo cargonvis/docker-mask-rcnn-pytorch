@@ -68,7 +68,13 @@
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) --> 
 ![Product Name Screen Shot][product-screenshot] <!-- Image without link -->
 
-The Automatized Mask-RCNN-pytorch project simplifies the process of training and deploying a segmentation object detection model (both instance and semantic segmentation) by providing a streamlined workflow, GPU support, and data augmentation techniques. It empowers users to achieve accurate and efficient object detection for various applications.
+The Automatized Mask-RCNN-pytorch project simplifies the process of training and deploying a segmentation object detection model. This project supports both instance and semantic segmentation modes. 
+
+Instance segmentation distinguishes individual objects within an image, providing precise outlines for each object. It is commonly used when the goal is to identify and differentiate distinct objects, even if they are of the same class.
+
+Semantic segmentation, on the other hand, classifies each pixel in the image into object categories. It focuses on labeling each part of the image with the corresponding class, providing a holistic understanding of the scene.
+
+This project provides a streamlined workflow, GPU support, and data augmentation techniques, empowering users to achieve accurate and efficient object detection for various applications.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
