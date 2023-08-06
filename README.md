@@ -86,6 +86,7 @@ This project provides a streamlined workflow, GPU support, and data augmentation
 * [![Python][Python.org]][Python-url]
 * [![Pytorch][Pytorch.org]][Pytorch-url]
 * [![OpenCV][OpenCV.org]][OpenCV-url]
+* [![Json][Json.org]][Json-url]
 * [![Bash][Bash.org]][Bash-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -317,6 +318,8 @@ This project extends its gratitude to the following resources for their valuable
 [Pytorch-url]: https://pytorch.org/
 [OpenCV.org]: https://img.shields.io/badge/OpenCV-LIME?logo=Opencv&style=for-the-badge&logoColor=white%22
 [OpenCV-url]: https://opencv.org/
+[Json.org]: https://img.shields.io/badge/json-yellow?style=for-the-badge&logo=json&logoColor=white
+[Json-url]: https://www.json.org/
 [Bash.org]: https://img.shields.io/badge/GNU%20Bash-4EAA25?logo=gnubash&style=for-the-badge&logoColor=fff
 [Bash-url]: https://www.gnu.org/software/bash/
 [Email-shield]: https://img.shields.io/badge/gmail-red?style=for-the-badge&logo=gmail&logoColor=white
