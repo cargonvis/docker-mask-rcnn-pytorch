@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Prompt the user to enter the images folder name
+read -p "Enter the images folder name: " images_folder_name
+
+# Prompt the user to choose segmentation type
+read -p "Choose segmentation type (instance_segmentation or semantic_segmentation): " segmentation_type
+
+# Prompt the user to enter the number of classes
+read -p "Enter the number of classes: " num_classes
+
+# Prompt the user to enter the names of the classes separated by commas
+read -p "Enter the names of the classes (separated by commas): " class_names
+
+# Prompt the user to enter the number of epochs
+read -p "Enter the number of epochs for training: " num_epochs
+
+# Base path (current directory)
+base_path=$(pwd)
+
+# Source directory where the images and annotations are located
+source_images_dir="$base_path/$images_folder_name"
+destination_dir="$base_path/labelme/examples/$segmentation_type/data_annotated"
+
+# Clear destination directory and move images and annotations
+rm -rf "$destination_dir"/*
+mkdir -p "$destination_dir"
+mv "$source_images_dir"/* "$destination_dir"/
+
+# Create labels.txt in destination directory
+echo "__ignore__" > "$base_path/labelme/examples/$segmentation_type/labels.txt"
+echo "_background_" >> "$base_path/labelme/examples/$segmentation_type/labels.txt"
+IFS=',' read -ra class_array <<< "$class_names"
+for class in "${class_array[@]}"; do
+    echo "$class" >> "$base_path/labelme/examples/$segmentation_type/labels.txt"
+done
+
+# Remove existing dataset_voc directory
+rm -rf "$base_path/labelme/examples/$segmentation_type/data_dataset_voc"
+
+# Export dataset to VOC format
+python3 "$base_path/labelme/examples/$segmentation_type/labelme2voc.py" "$base_path/labelme/examples/$segmentation_type/data_annotated" "$base_path/labelme/examples/$segmentation_type/data_dataset_voc" --labels "$base_path/labelme/examples/$segmentation_type/labels.txt"
+
+# Create Mask-RCNN-pytorch/my_dataset
+mkdir -p "$base_path/Mask-RCNN-pytorch/my_dataset"
+mv "$base_path/labelme/examples/$segmentation_type/data_dataset_voc/JPEGImages" "$base_path/Mask-RCNN-pytorch/my_dataset/"
+mv "$base_path/labelme/examples/$segmentation_type/data_dataset_voc/SegmentationClassPNG" "$base_path/Mask-RCNN-pytorch/my_dataset/SegmentationClass"
+mv "$base_path/labelme/examples/$segmentation_type/data_dataset_voc/SegmentationObjectPNG" "$base_path/Mask-RCNN-pytorch/my_dataset/SegmentationObject"
+mv "$base_path/labelme/examples/$segmentation_type/labels.txt" "$base_path/Mask-RCNN-pytorch/my_dataset/labels.txt"
+
+# Inform about the training command
+echo "To train, use the following command:"
+echo "python3 train.py --data my_dataset --num_classes $((num_classes + 1)) --num_epochs $num_epochs"
+echo "You can adjust batch size using: --batchsize <batch_size>"
+echo "If you encounter device memory issues during training, consider decreasing the batch size."

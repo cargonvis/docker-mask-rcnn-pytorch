@@ -1,0 +1,43 @@
+sudo apt install nvidia-driver-535 nvidia-dkms-535
+reboot
+sudo apt install nvidia-cuda-toolkit
+
+pip install torch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 (or any version lower than torch 2.0 with its corresponding torchvision and torchaudio compatible versions: https://github.com/microsoft/DeepSpeed/pull/2863)
+
+STEPS:
+Apply data augmentation (run file)
+Annotate images (explain all proccess)
+
+preparation_for_training file:
+- Ask for images and annotations folder (normally named "images")
+- Ask if we want instance_segmentation or semantic_segmentation
+- Ask for numbers of classes and names of classes separated by comma)
+- Move images and annotations from folder "images" to labelme/examples/instance_segmentation(or semantic_segmentation)/data_annotated
+- Create labels.txt in labelme/examples/instance_segmentation(or semantic_segmentation)/labels.txt including __ignore__ and 
+_background_ classes (each class in a new line)
+- Remove labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc
+- Run command for export VOC-format dataset from json files: ./labelme/examples/instance_segmentation(or semantic_segmentation)/labelme2voc.py labelme/examples/instance_segmentation(or semantic_segmentation)/data_annotated labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc --labels labelme/examples/instance_segmentation(or semantic_segmentation)/labels.txt
+- Once the command finish (it takes a while), do the following:
+	- Create Mask-RCNN-pytorch/my_dataset
+	- Move labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc/JPEGImages to Mask-RCNN-pytorch/my_dataset
+	- Move labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc/SegmentationClassPNG to Mask-RCNN-pytorch/my_dataset renaming SegmentationClassPNG folder as SegmentationClass 
+	- Move labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc/SegmentationObjectPNG to Mask-RCNN-pytorch/my_dataset renaming SegmentationObjectPNG folder as SegmentationObject
+	- Move labelme/examples/instance_segmentation(or semantic_segmentation)/data_dataset_voc/class_names.txt to Mask-RCNN-pytorch/my_dataset renaming class_names.txt folder as labels.txt
+- Print a line of code that informs about the command for training modifying the num_classes for the number of classes inputed at the beginning of this file + 1. Command is the following: python3 train.py --data my_dataset --num_classes 12 --num_epochs 2
+Also inform that batch size can be increased of decreased by including in the command the argument --batchsize and number of batchsize (example: --batchsize 2). One possible reason for decreasing the batch size is if there is a problem with device memory.
+
+- Finally go to Mask-RCNN-pytorch and run the training command: python3 train.py --data my_dataset --num_classes 12 --num_epochs 2 --batchsize 2 (batch size can be modified depending on your device's memory)
+
+cd docker-mask-rcnn-pytorch
+docker build -t docker-mask-rcnn-pytorch_image .
+docker run --gpus all -e DISPLAY=$DISPLAY -it -p 8888:8888 --privileged -v /tmp/.X11-unix/:/tmp/.X11-unix/ -v /dev/bus/video0:/dev/bus/video0 --network="host" --ipc=host --name docker-mask-rcnn-pytorch_webcam_GPU docker-mask-rcnn-pytorch_image
+
+
+3  pip uninstall opencv-python
+    4  pip install opencv-python==4.3.0.36
+    5  pip install opencv-python==4.3.0.38
+    6  labelme
+    7  pip show PyQt5
+    8  pip install labelme --upgrade
+    9  labelme
+   10  history
